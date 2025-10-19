@@ -1,0 +1,23 @@
+[Unit]
+Description=HPLink PBX API Server
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=hplink
+Group=hplink
+WorkingDirectory=/opt/hplink-pbx/api-server
+EnvironmentFile=/opt/hplink-pbx/.env
+ExecStart=/opt/hplink-pbx/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hplink-api
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
