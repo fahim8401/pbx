@@ -1,0 +1,45 @@
+# Caddy Configuration for HPLink PBX Cloud
+# Place this in /etc/caddy/Caddyfile or as an import
+
+# API Server
+api.hplinkpbx.com {
+    reverse_proxy localhost:8000
+    
+    log {
+        output file /var/log/caddy/api.log
+    }
+}
+
+# Admin Portal
+admin.hplinkpbx.com {
+    root * /opt/hplink-pbx/portals/admin-portal/out
+    file_server
+    try_files {path} {path}.html {path}/ =404
+    
+    log {
+        output file /var/log/caddy/admin.log
+    }
+}
+
+# Client Portal
+portal.hplinkpbx.com {
+    root * /opt/hplink-pbx/portals/client-portal/out
+    file_server
+    try_files {path} {path}.html {path}/ =404
+    
+    log {
+        output file /var/log/caddy/portal.log
+    }
+}
+
+# WebSocket for SIP.js (WSS)
+pbx.hplinkpbx.com {
+    reverse_proxy localhost:5063 {
+        header_up Upgrade {http.request.header.Upgrade}
+        header_up Connection {http.request.header.Connection}
+    }
+    
+    log {
+        output file /var/log/caddy/pbx-ws.log
+    }
+}
