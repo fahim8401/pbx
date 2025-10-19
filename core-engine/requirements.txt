@@ -1,0 +1,15 @@
+# HPLink PBX Core Engine Requirements
+# Python 3.11+
+
+# PJSIP - VoIP library
+# Note: pjsua2 requires system-level installation of PJSIP
+# Install via: apt-get install python3-pjsua2 (on Ubuntu/Debian)
+# or build from source: https://www.pjsip.org/
+
+# Core dependencies
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Optional: for enhanced features
+# redis>=5.0.0  # For distributed caching
+# prometheus-client>=0.19.0  # For metrics

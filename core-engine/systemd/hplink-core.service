@@ -1,0 +1,23 @@
+[Unit]
+Description=HPLink PBX Core Engine
+After=network.target
+
+[Service]
+Type=simple
+User=hplink
+Group=hplink
+WorkingDirectory=/opt/hplink-pbx/core-engine
+EnvironmentFile=/opt/hplink-pbx/.env
+ExecStart=/opt/hplink-pbx/venv/bin/python /opt/hplink-pbx/core-engine/main.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hplink-core
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
